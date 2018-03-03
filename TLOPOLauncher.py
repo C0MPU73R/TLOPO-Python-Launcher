@@ -17,7 +17,7 @@ while True:
         password = getpass.getpass('Password: ')
 
         data = {'username': username, 'password': password}
-        response = requests.post("https://api.piratesonline.co/login/", headers=headers, data=data, verify=False).json()
+        response = requests.post("https://api.tlopo.com/login/", headers=headers, data=data, verify=False).json()
 
         if response.get('status') == 7:
             sys.stdout.write('\n')
