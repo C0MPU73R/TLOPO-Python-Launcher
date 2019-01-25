@@ -16,7 +16,7 @@ while True:
     if status == -1:
         username = raw_input('Username: ')
         password = getpass.getpass('Password: ')
-        gtoken = input("2FA Token (Leave blank if you don't have one): ")
+        gtoken = raw_input("2FA Token (Leave blank if you don't have one): ")
 
         if gtoken:
             data = {
