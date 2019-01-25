@@ -12,12 +12,28 @@ response = {'status': -1}
 
 while True:
     status = response.get('status')
+
     if status == -1:
         username = raw_input('Username: ')
         password = getpass.getpass('Password: ')
+        gtoken = input("2FA Token (Leave blank if you don't have one):")
 
-        data = {'username': username, 'password': password}
-        response = requests.post("https://api.tlopo.com/login/", headers=headers, data=data, verify=False).json()
+        if gtoken:
+            data = {
+                'username': username,
+                'password': password,
+                'gtoken':   gtoken
+            }
+        else:
+            data = {
+                'username': username,
+                'password': password
+            }
+
+        response = requests.post("https://api.tlopo.com/login/",
+                                 headers=headers,
+                                 data=data,
+                                 verify=False).json()
 
         if response.get('status') == 7:
             sys.stdout.write('\n')
@@ -34,3 +50,7 @@ os.environ['TLOPO_GAMESERVER'] = response['gameserver']
 
 if sys.platform == 'win32':
     os.system('tlopo.exe')
+elif sys.platform == 'linux2':
+    os.system('./tlopo')
+else:
+    raise NotImplementedError("Your OS platform (%s) is currently not supported by this launcher." % sys.platform)
